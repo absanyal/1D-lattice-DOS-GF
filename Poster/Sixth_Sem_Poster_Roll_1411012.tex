@@ -1,0 +1,324 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Jacobs Landscape Poster
+% LaTeX Template
+% Version 1.1 (14/06/14)
+%
+% Created by:
+% Computational Physics and Biophysics Group, Jacobs University
+% https://teamwork.jacobs-university.de:8443/confluence/display/CoPandBiG/LaTeX+Poster
+% 
+% Further modified by:
+% Nathaniel Johnston (nathaniel@njohnston.ca)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[final]{beamer}
+
+\usepackage[scale=1.24]{beamerposter} % Use the beamerposter package for laying out the poster
+
+
+\usetheme{confposter} % Use the confposter theme supplied with this template
+
+\setbeamercolor{block title}{fg=dblue,bg=white} % Colors of the block titles
+\setbeamercolor{block body}{fg=black,bg=white} % Colors of the body of blocks
+\setbeamercolor{block alerted title}{fg=white,bg=dblue!70} % Colors of the highlighted block titles
+\setbeamercolor{block alerted body}{fg=black,bg=dblue!10} % Colors of the body of highlighted blocks
+% Many more colors are available for use in beamerthemeconfposter.sty
+
+%-----------------------------------------------------------
+% Define the column widths and overall poster size
+% To set effective sepwid, onecolwid and twocolwid values, first choose how many columns you want and how much separation you want between columns
+% In this template, the separation width chosen is 0.024 of the paper width and a 4-column layout
+% onecolwid should therefore be (1-(# of columns+1)*sepwid)/# of columns e.g. (1-(4+1)*0.024)/4 = 0.22
+% Set twocolwid to be (2*onecolwid)+sepwid = 0.464
+% Set threecolwid to be (3*onecolwid)+2*sepwid = 0.708
+
+\newlength{\sepwid}
+\newlength{\onecolwid}
+\newlength{\twocolwid}
+\newlength{\threecolwid}
+\setlength{\paperwidth}{48in} % A0 width: 46.8in
+\setlength{\paperheight}{36in} % A0 height: 33.1in
+\setlength{\sepwid}{0.024\paperwidth} % Separation width (white space) between columns
+\setlength{\onecolwid}{0.22\paperwidth} % Width of one column
+\setlength{\twocolwid}{0.464\paperwidth} % Width of two columns
+\setlength{\threecolwid}{0.708\paperwidth} % Width of three columns
+\setlength{\topmargin}{-0.5in} % Reduce the top margin size
+%-----------------------------------------------------------
+
+\usepackage{graphicx}  % Required for including images
+
+\usepackage{booktabs} % Top and bottom rules for tables
+
+\usepackage{physics}
+
+\usepackage{lipsum}
+
+\usepackage{subcaption}
+
+\usepackage{color}
+
+\newcommand{\I}{\mathrm{i}}
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION 
+%----------------------------------------------------------------------------------------
+
+\title{Few Fermion Spectral Functions in One-dimension} % Poster title
+
+\author{Amit Bikram Sanyal\\Completed under the guidance of Dr. Anamitra Mukherjee} % Author(s)
+
+\institute{National Institute of Science Education and Research} % Institution(s)
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\addtobeamertemplate{block end}{}{\vspace*{2ex}} % White space under blocks
+\addtobeamertemplate{block alerted end}{}{\vspace*{2ex}} % White space under highlighted (alert) blocks
+
+\setlength{\belowcaptionskip}{2ex} % White space under figures
+\setlength\belowdisplayshortskip{2ex} % White space under equations
+
+\begin{frame}[t] % The whole poster is enclosed in one beamer frame
+
+\begin{columns}[t] % The whole poster consists of three major columns, the second of which is split into two columns twice - the [t] option aligns each column's content to the top
+
+\begin{column}{\sepwid}\end{column} % Empty spacer column
+
+\begin{column}{\onecolwid} % The first column
+
+%----------------------------------------------------------------------------------------
+%	OBJECTIVES
+%----------------------------------------------------------------------------------------
+
+\begin{alertblock}{Objectives}
+\begin{itemize}
+\item Calculation of spectral functions for two fermions on an infinite lattice with nearest neighbor interaction.
+\item Extending the model to calculate density of states for two fermions interacting via long range forces (Coulomb and Rydberg)
+\item Determine the critical potential for the formation of anti-binding states in the Coulomb and Rydberg potentials
+\end{itemize}
+
+\end{alertblock}
+
+%----------------------------------------------------------------------------------------
+%	INTRODUCTION
+%----------------------------------------------------------------------------------------
+\begin{block}{Introduction}
+
+The Green's function of a system is proportional to its spectral weight function, and hence, its density of states. It allows us to calculate the spectrum of a system while avoiding the problems of exact diagonalization.
+
+Let us consider an infinite, one dimensional lattice, occupied by two identical, \textit{spinless} fermions, separated by a distance $n$ and having center of mass momentum $k$. Such a two particle state is denoted by:
+\begin{equation}
+\ket{k,n} = \frac{1}{\sqrt{N}} \sum_{i}\exp\left[ \I k \left( R_i + \frac{n a}{2}\right) \right]  c^{\dagger}_{i} c^{\dagger}_{i + n} \ket{0}
+\end{equation}
+The system is characterized by the Hamiltonian:
+\begin{equation}\label{eqn:Hamiltonian}
+\hat{\mathcal{H}} = -t \sum_{i}\left( c^{\dagger}_{i} c^{}_{i + 1} + c^{\dagger}_{i + 1} c^{}_{i} \right) + U \sum_{i} n_i n_{i + 1}
+\end{equation}
+The Green's function for the system is defined as:
+\begin{equation}\label{eqn:GreenFunc}
+\hat{G}\left(\omega\right) = \left[ \omega + \I \epsilon - \hat{\mathcal{H}} \right]^{-1}
+\end{equation}
+We also define the matrix elements of the Green's function as
+\begin{equation}\label{eqn:GF_mel}
+G\left(m, n; k, \omega \right) = \mel{k, m}{\hat{G}\left(\omega\right)}{k, n}
+\end{equation}
+Then, the two particle spectral weight function is:
+\begin{equation}\label{eqn:SpectralWeight}
+A_2 \left( k, \omega \right) = - \frac{1}{\pi} \Im{G\left(1, 1; k, \omega \right)}
+\end{equation}
+Given a fermion of energy $\omega$ is destroyed at site $j$, the spectral weight function gives the probability of a fermion with the same energy being created at $i$, or vice versa. The quantity is of particular interest as it can be experimentally measured and thus, verified.
+\end{block}
+
+%----------------------------------------------------------------------------------------
+
+\end{column} % End of the first column
+
+\begin{column}{\sepwid}\end{column} % Empty spacer column
+
+%----------------------------------------------------------------------------------------
+
+\begin{column}{\onecolwid} % Second column
+	
+\begin{block}{Nearest neighbor interaction}
+The two particle spectra with nearest neighbor interaction is obtained by plotting equation \eqref{eqn:SpectralWeight}.
+
+
+\begin{figure}[h!]
+	
+\centering
+
+\includegraphics[width=0.5\linewidth]{NNN_Interaction/Basic_Plots/U1_0_U2_0}
+\caption{Spectrum of a free two-particle state for different values of $k$. Legends: {\color{blue} $k = 0$}, {\color{red} $k = \pi$}.}
+\label{fig:u10u20}
+
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\linewidth]{NNN_Interaction/Basic_Plots/U1_1500_U2_0}
+\caption{Spectrum of the two-particle state for different values of $k$ at $U = 1.5$. Legends: {\color{blue} $k = 0$}, {\color{red} $k = \pi$}.}
+\label{fig:u11500u20}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.5\linewidth]{NNN_Interaction/Basic_Plots/U1_5000_U2_0}
+	\caption{Spectrum of the two-particle state for different values of $k$ at $U = 5.0$. Legends: {\color{blue} $k = 0$}, {\color{red} $k = \pi$}.}
+	\label{fig:u15000u20}
+\end{figure}
+
+The free particle spectrum is symmetric. For increasing $U$, the peaks shift to higher energy, as the strength of the interaction increases. For a given $U$, at small values of $k$, the spectrum is distorted. Then, beyond a certain value of $U$, some of the low momentum peaks separate from the continuum. The large momentum peaks still lie between within the $8t$ range. At even higher $U$, all peaks separate from the continuum. This signifies the formation of an anti-binding state.
+
+\end{block}
+\end{column}
+
+\begin{column}{\sepwid}\end{column} % Empty spacer column
+
+%----------------------------------------------------------------------------------------
+
+\begin{column}{\onecolwid} % Third column
+	
+\begin{block}{Long range interactions}
+The interaction term of the Hamiltonian is now redefined as:
+\begin{equation}\label{eqn:Long_interaction}
+U \left( n \right)  = U \frac{\exp(- \alpha n ^ 2)}{n ^ \beta}
+\end{equation}
+The density of states is defined as:
+\begin{equation}\label{eqn:DOS}
+\rho \left( \omega \right) = \frac{1}{\mathcal{N}}\sum_{k = 0}^{\pi} A^{}_{2} \left(k, \omega \right)
+\end{equation}
+\begin{figure}[p!]
+	\centering
+	\begin{subfigure}{0.3\linewidth}
+		\includegraphics[width=\textwidth]{Long_Coulomb_Interaction/Evolution/alpha_0_beta_1000_U_0}
+		\caption{$U = 0.0$}
+	\end{subfigure}
+	\begin{subfigure}{0.3\linewidth}
+		\includegraphics[width=\textwidth]{Long_Coulomb_Interaction/Evolution/alpha_0_beta_1000_U_2000}
+		\caption{$U = 2.0$}
+	\end{subfigure}
+	\begin{subfigure}{0.3\linewidth}
+		\includegraphics[width=\textwidth]{Long_Coulomb_Interaction/Evolution/alpha_0_beta_1000_U_4000}
+		\caption{$U = 4.0$}
+	\end{subfigure}
+	\begin{subfigure}{0.3\linewidth}
+		\includegraphics[width=\textwidth]{Long_Coulomb_Interaction/Evolution/alpha_0_beta_1000_U_6000}
+		\caption{$U = 6.0$}
+	\end{subfigure}
+	\begin{subfigure}{0.3\linewidth}
+		\includegraphics[width=\textwidth]{Long_Coulomb_Interaction/Evolution/alpha_0_beta_1000_U_8000}
+		\caption{$U = 8.0$}
+	\end{subfigure}
+	\begin{subfigure}{0.3\linewidth}
+		\includegraphics[width=\textwidth]{Long_Coulomb_Interaction/Evolution/alpha_0_beta_1000_U_10000}
+		\caption{$U = 10.0$}
+	\end{subfigure}
+	\caption{Evolution of the DOS with increasing value of $U$ for the $\alpha = 0$, $\beta = 1$ case.}
+\end{figure}
+\begin{figure}[p!]
+	\centering
+	\begin{subfigure}{0.3\linewidth}
+		\includegraphics[width=\textwidth]{Long_Coulomb_Interaction/Evolution/alpha_0_beta_6000_U_0}
+		\caption{$U = 0.0$}
+	\end{subfigure}
+	\begin{subfigure}{0.3\linewidth}
+		\includegraphics[width=\textwidth]{Long_Coulomb_Interaction/Evolution/alpha_0_beta_6000_U_2000}
+		\caption{$U = 2.0$}
+	\end{subfigure}
+	\begin{subfigure}{0.3\linewidth}
+		\includegraphics[width=\textwidth]{Long_Coulomb_Interaction/Evolution/alpha_0_beta_6000_U_4000}
+		\caption{$U = 4.0$}
+	\end{subfigure}
+	\begin{subfigure}{0.3\linewidth}
+		\includegraphics[width=\textwidth]{Long_Coulomb_Interaction/Evolution/alpha_0_beta_6000_U_6000}
+		\caption{$U = 6.0$}
+	\end{subfigure}
+	\begin{subfigure}{0.3\linewidth}
+		\includegraphics[width=\textwidth]{Long_Coulomb_Interaction/Evolution/alpha_0_beta_6000_U_8000}
+		\caption{$U = 8.0$}
+	\end{subfigure}
+	\begin{subfigure}{0.3\linewidth}
+		\includegraphics[width=\textwidth]{Long_Coulomb_Interaction/Evolution/alpha_0_beta_6000_U_10000}
+		\caption{$U = 10.0$}
+	\end{subfigure}
+	\caption{Evolution of the DOS with increasing value of $U$ for the $\alpha = 0$, $\beta = 6$ case.}
+\end{figure}
+The free particle DOS resembles that of a one-particle state on a 2D lattice. This is noteworthy, as it shows that two one-dimensional particles behave similar to a single particle in two dimensions. The peak denoting the anti-binding state resembles the DOS of \textit{one particle in 1D}. The broadening of the peak also changes with $U$; it decreases with increasing $U$.
+\end{block}
+	
+\end{column}
+
+\begin{column}{\sepwid}\end{column} % Empty spacer column
+
+%----------------------------------------------------------------------------------------
+
+\begin{column}{\onecolwid} % Fourth column
+	
+\begin{block}{Critical potential for anti-binding}
+We will consider the two cases of Coulomb $\left(\alpha = 0, \beta = 1\right)$ and the Rydberg $\left(\alpha = 0, \beta = 6\right)$ potential, and observe the potential at which an anti-binding state is just formed.
+
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}{0.4\linewidth}
+		\includegraphics[width=\textwidth]{Long_Coulomb_Interaction/Crit_final/Crit_1/alpha_0_beta_1000_U_7800}
+		\caption{Coulomb potential.}
+		\label{fig:alpha0beta1000u7800}
+	\end{subfigure}
+	\begin{subfigure}{0.4\linewidth}
+		\includegraphics[width=\textwidth]{Long_Coulomb_Interaction/Crit_final/Crit_6/alpha_0_beta_6000_U_6700}
+		\caption{Rydberg potential.}
+		\label{fig:alpha0beta6000u6700}
+	\end{subfigure}
+	\caption{Critical value of the potential at which an anti-binding state is just formed.}
+\end{figure}
+The anti-binding state for the Coulomb potential forms at about $U = 7.8$, while for the Rydberg atom potential, it is $U = 6.7$.
+\end{block}
+
+\setbeamercolor{block title}{fg=red,bg=white} % Change the block title color
+
+\setbeamercolor{block alerted title}{fg=black,bg=norange} % Change the alert block title colors
+\setbeamercolor{block alerted body}{fg=black,bg=white} % Change the alert block body colors
+
+\begin{alertblock}{Future Prospects}
+	
+	\begin{itemize}
+		\item Extension of the formalism to higher dimensions and more particles
+		\item Observe the effect of changing the range of interaction through tuning $\alpha$
+	\end{itemize}
+	
+\end{alertblock}
+
+\begin{block}{References}
+	
+	\nocite{*} % Insert publications even if they are not cited in the poster
+	\small{\bibliographystyle{unsrt}
+		\bibliography{sample}\vspace{0.75in}}
+	
+\end{block}
+\vspace{-20mm}
+\begin{block}{Acknowledgements}
+	\small{\rmfamily{I would like to thank Dr. Anamitra Mukherjee for his expert advice and constant encouragement throughout the course of this project, as well providing me with the opportunity to work under him and learn from him.}} \\
+	
+\end{block}
+	
+\end{column}
+
+%----------------------------------------------------------------------------------------
+
+\end{columns} % End of all the columns in the poster
+
+\end{frame} % End of the enclosing frame
+
+\end{document}

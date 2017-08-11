@@ -1,0 +1,234 @@
+\documentclass[twoclumn, a4, 11pt]{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage{booktabs}
+\usepackage{inputenc}
+\usepackage{physics}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{bm}
+\usepackage{fancyhdr}
+\usepackage{textcomp}
+\usepackage{lipsum}
+\usepackage{longtable}
+\usepackage{adjustbox}
+\usepackage{siunitx}
+
+\geometry{top = 2.5cm, bottom = 2.5cm, left = 2.5cm, right = 2.5cm}
+
+\setlength{\parindent}{0mm}
+\setlength{\parskip}{0.3em}
+\setcounter{secnumdepth}{3}
+
+\renewcommand\refname{Citations and References}
+\renewcommand{\abstractname}{\vspace{-\baselineskip}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Page \thepage}
+\lhead{Critical Potentials for Anti-binding State Formation}
+
+\begin{document}
+\twocolumn[{
+\begin{center}
+{\LARGE \textbf{Critical Potentials for Anti-binding State Formation}}\\
+\today
+\end{center}
+}]
+
+The interaction term has been taken as
+\begin{equation}
+U = U_1 \frac{\exp(- \alpha m ^ 2)}{m ^ \beta}
+\end{equation}
+where $m$ is the separation between the two particles, and $\alpha$ and $\beta$ are two parameters.
+
+For $\beta=1$ and $\beta = 6$, various values of $\alpha$ have been selected, and, for each pair of $\alpha$ and $\beta$, the $U_1$ required for an anti-binding state formation has been found and plotted against $\alpha$ for a fixed $\beta$.
+
+For $\beta = 1$,
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c}
+\hline\hline
+$\alpha$	&	$U_1$	\\
+\hline
+0	&	4	\\
+1	&	12	\\
+2	&	30	\\
+3	&	80	\\
+4	&	220	\\
+5	&	600	\\
+\hline
+\end{tabular}
+\caption{Variation of $\alpha$ and $U_1$.}
+\end{table}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=1\linewidth]{b_1_plot}
+\caption{Variation of $\alpha$ and $U_1$.}
+\label{fig:b1plot}
+\end{figure}
+
+\pagebreak
+For $\beta = 2$,
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c}
+\hline\hline
+$\alpha$	&	$U_1$	\\
+\hline
+0.0	&	4.00	\\
+0.2	&	4.75	\\
+0.4	&	5.75	\\
+0.6	&	7.00	\\
+0.8	&	8.75	\\
+1.0	&	10.25	\\
+1.2	&	12.75	\\
+1.4	&	15.25	\\
+1.6	&	18.50	\\
+1.8	&	22.50	\\
+2.0	&	27.50	\\
+\hline
+\end{tabular}
+\caption{Variation of $\alpha$ and $U_1$.}
+\end{table}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=1\linewidth]{b_6_plot}
+\caption{Variation of $\alpha$ and $U_1$.}
+\label{fig:b6plot}
+\end{figure}
+
+The variations were fit against an exponential function.
+
+\pagebreak
+\begin{figure}[t!]
+\centering
+\includegraphics[width=1\linewidth]{Critical_Potential_b_1/a_0_b_1}
+\caption{Anti-binding state for $\beta = 1$, $\alpha = 0$.}
+\label{fig:a0b1}
+\end{figure}
+
+\begin{figure}[t!]
+	\centering
+	\includegraphics[width=1\linewidth]{Critical_Potential_b_1/a_1_b_1}
+	\caption{Anti-binding state for $\beta = 1$, $\alpha = 1$.}
+	\label{fig:a1b1}
+\end{figure}
+
+\begin{figure}[t!]
+	\centering
+	\includegraphics[width=1\linewidth]{Critical_Potential_b_1/a_2_b_1}
+	\caption{Anti-binding state for $\beta = 1$, $\alpha = 2$.}
+	\label{fig:a2b1}
+\end{figure}
+
+\begin{figure}[t!]
+	\centering
+	\includegraphics[width=1\linewidth]{Critical_Potential_b_1/a_3_b_1}
+	\caption{Anti-binding state for $\beta = 1$, $\alpha = 3$.}
+	\label{fig:a3b1}
+\end{figure}
+
+\begin{figure}[t!]
+	\centering
+	\includegraphics[width=1\linewidth]{Critical_Potential_b_1/a_4_b_1}
+	\caption{Anti-binding state for $\beta = 1$, $\alpha = 4$.}
+	\label{fig:a4b1}
+\end{figure}
+
+\begin{figure}[t!]
+	\centering
+	\includegraphics[width=1\linewidth]{Critical_Potential_b_1/a_5_b_1}
+	\caption{Anti-binding state for $\beta = 1$, $\alpha = 5$.}
+	\label{fig:a5b1}
+\end{figure}
+
+\pagebreak
+\begin{figure}[t!]
+\centering
+\includegraphics[width=1\linewidth]{Critical_Potential_b_6/a_0_b_6}
+\caption{Anti-binding state for $\beta = 6$, $\alpha = 0$.}
+\label{fig:a0b6}
+\end{figure}
+
+\begin{figure}[t!]
+\centering
+\includegraphics[width=1\linewidth]{Critical_Potential_b_6/a_0p2_b_6}
+\caption{Anti-binding state for $\beta = 6$, $\alpha = 0.2$.}
+\label{fig:a0p2b6}
+\end{figure}
+
+\begin{figure}[t!]
+	\centering
+	\includegraphics[width=1\linewidth]{Critical_Potential_b_6/a_0p4_b_6}
+	\caption{Anti-binding state for $\beta = 6$, $\alpha = 0.4$.}
+	\label{fig:a0p4b6}
+\end{figure}
+
+\begin{figure}[t!]
+	\centering
+	\includegraphics[width=1\linewidth]{Critical_Potential_b_6/a_0p6_b_6}
+	\caption{Anti-binding state for $\beta = 6$, $\alpha = 0.6$.}
+	\label{fig:a0p6b6}
+\end{figure}
+
+\begin{figure}[t!]
+	\centering
+	\includegraphics[width=1\linewidth]{Critical_Potential_b_6/a_0p8_b_6}
+	\caption{Anti-binding state for $\beta = 6$, $\alpha = 0.8$.}
+	\label{fig:a0p8b6}
+\end{figure}
+
+\begin{figure}[t!]
+	\centering
+	\includegraphics[width=1\linewidth]{Critical_Potential_b_6/a_1p0_b_6}
+	\caption{Anti-binding state for $\beta = 6$, $\alpha = 1.0$.}
+	\label{fig:a1p0b6}
+\end{figure}
+
+\begin{figure}[t!]
+	\centering
+	\includegraphics[width=1\linewidth]{Critical_Potential_b_6/a_1p2_b_6}
+	\caption{Anti-binding state for $\beta = 6$, $\alpha = 1.2$.}
+	\label{fig:a1p2b6}
+\end{figure}
+
+\begin{figure}[t!]
+	\centering
+	\includegraphics[width=1\linewidth]{Critical_Potential_b_6/a_1p4_b_6}
+	\caption{Anti-binding state for $\beta = 6$, $\alpha = 1.4$.}
+	\label{fig:a1p4b6}
+\end{figure}
+
+\begin{figure}[t!]
+	\centering
+	\includegraphics[width=1\linewidth]{Critical_Potential_b_6/a_1p6_b_6}
+	\caption{Anti-binding state for $\beta = 6$, $\alpha = 1.6$.}
+	\label{fig:a1p6b6}
+\end{figure}
+
+
+\pagebreak
+\begin{figure}[t!]
+	\centering
+	\includegraphics[width=1\linewidth]{Critical_Potential_b_6/a_1p8_b_6}
+	\caption{Anti-binding state for $\beta = 6$, $\alpha = 1.8$.}
+	\label{fig:a1p8b6}
+\end{figure}
+
+\begin{figure}[t!]
+	\centering
+	\includegraphics[width=1\linewidth]{Critical_Potential_b_6/a_2p0_b_6}
+	\caption{Anti-binding state for $\beta = 6$, $\alpha = 2.0$.}
+	\label{fig:a2p0b6}
+\end{figure}
+
+
+
+
+\end{document}

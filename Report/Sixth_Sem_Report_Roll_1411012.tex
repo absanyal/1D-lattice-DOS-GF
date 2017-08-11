@@ -1,0 +1,516 @@
+\documentclass[a4paper, 11pt]{report}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage{booktabs}
+\usepackage{inputenc}
+\usepackage{physics}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{bm}
+\usepackage{fancyhdr}
+\usepackage{textcomp}
+\usepackage{lipsum}
+\usepackage{longtable}
+\usepackage{adjustbox}
+\usepackage{siunitx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{color}
+
+%\geometry{top = 2.0cm, bottom = 2.0cm, left = 2.0cm, right = 2.0cm}
+%
+\setlength{\parindent}{0mm}
+%\setlength{\parskip}{0.3em}
+\setcounter{secnumdepth}{3}
+
+%\pagestyle{fancy}
+%\fancyhf{}
+%\lhead{Sixth Semester Project}
+%\chead{Page \thepage}
+%\rhead{Title}
+%\cfoot{Page \thepage}
+
+\renewcommand\bibname{References}
+\newcommand{\I}{\mathrm{i}}
+\renewcommand{\baselinestretch}{1.5}
+
+
+% Title Page
+\title{\textbf{{\large Sixth Semester Project Report\\on}\vspace{3mm}\\Few Fermion Spectral Functions in One-dimension}}
+\author{\textbf{Amit Bikram Sanyal}\\
+	Roll No.: 1411012\\\\
+	Third Year, School of Physical Sciences\\
+	National Institute of Science Education and Research\\ \\
+	Email: \texttt{amit.sanyal@niser.ac.in}\\ \\ \\ \\ \\
+	Project completed under the guidance of\\
+	\textbf{Dr. Anamitra Mukherjee}
+}
+\date{}
+
+\begin{document}
+\begin{titlepage}
+	%\vspace{-3cm}
+	\maketitle
+	%\begin{center}
+		%\vfill
+		%\includegraphics[width = 0.1\linewidth]{niser-logo}
+	%\end{center}
+	\thispagestyle{empty}
+\end{titlepage}
+\newpage
+\thispagestyle{empty}
+
+\begin{center}
+	{\Large \textbf{Acknowledgments}}
+\end{center}
+I would like to thank Dr. Anamitra Mukherjee for his expert advice and constant encouragement throughout the course of this project, as well providing me with the opportunity to work under him and learn from him.
+\thispagestyle{empty}
+\newpage
+\thispagestyle{empty}
+
+\begin{abstract}
+The Green's function of a system of particles allows us to calculate the density of states for the system, without having to resort to exact diagonalization methods. The density of states is the momentum integrated result of (-1/$\pi$) times the imaginary part of the momentum space Green's function. Here inspired by few body bound states like the trion excitation in cold atomic systems, we focus on the study of few body Green's functions. The technique (we use for calculating the Green's function) can also be easily generalized to many different kinds of interactions, and for higher number of particles and dimensions. Thus, it is a very promising approach to handle such problems.
+
+In this report, we consider a one-dimensional infinite lattice, occupied by two spinless fermions. Initially, we calculate its spectral function for nearest neighbor interactions. Later, we have consider long range interactions such as Coulomb potential and Rydberg atom potential, and calculate the density of states for them using similar Green's function techniques. We also investigate the evolution of the density of states with increasing strength of the potential, as well the minimum potential required for the formation of binding and anti-binding states.
+\thispagestyle{empty}
+\end{abstract}
+
+\thispagestyle{empty}
+\pagebreak
+\thispagestyle{empty}
+\tableofcontents
+\thispagestyle{empty}
+
+\newpage
+\setcounter{page}{1}
+
+\chapter{Two particle states with nearest neighbor interaction}\label{chap:NN}
+\section{Introduction}\label{ssec:Introduction}
+Given a Hamiltonian, $\hat{\mathcal{H}}$, the Green's function in reciprocal space and time is defined as
+\begin{equation}
+\hat{G}\left(\omega\right) = \left[ \omega + \I \epsilon - \hat{\mathcal{H}} \right]^{-1}
+\end{equation}
+It can be shown that the spectral weight function for a given system is proportional to the imaginary part of the matrix elements of this Green's function, that is, to $\Im{\hat{G}\left( m, n; k, \omega \right)}$. This term is obtained as the Fourier transform of the real time Green's function, $G \left(t, t'\right) = -\I \Theta \left(t - t'\right) \expval{\acomm{c^{}_{i}\left(t\right)}{c^{\dagger}_{j}\left(t'\right)}}$, which signifies the probability of a fermion being created at time $t'$ at site $j$, provided, at a prior time $t$, a fermion was destroyed at the site $i$, or vice versa. Thus, given a fermion of energy $\omega$ is destroyed at site $j$, the spectral weight function gives the probability of a fermion with the same energy being created at $i$, or vice versa. The quantity is of particular interest as it can be experimentally measured and thus, verified.
+
+While methods to exactly diagonalize the Hamiltonian, such as \textit{Lanczos algorithm}, do exist, the Green's function method has several advantages over exact diagonalization methods. For example, exact diagonalization forces us to calculate the entire spectrum at a time. As a result, for infinite dimensional Hamiltonians, cutoffs need to be introduced, which produces an approximate spectrum with particle in a box like solutions. On the other hand, the cutoff introduced in the Green's function technique does not affect the final spectrum. Also, it allows us to find the eigenvalues within any interval of $\omega$.
+
+In the chapter \ref{chap:NN}, we have used Green's functions technique to devise a method that allows us to calculate the spectrum of two-fermion states with nearest neighbor interaction. Then, we have proceeded to reproduce the results and plots as shown in the paper mentioned in \cite{bib:mb_paper}, along with some other results, using computer programs.
+
+In chapter \ref{chap:few_fermion}, we have investigated longer range forces, such as the Coulomb force, using similar Green's function techniques. We have also studied the corresponding density of states, and observed the formation of the binding and anti-binding states for such long range interactions.
+
+\section{Derivation of the two-fermion spectrum\\in one dimension}\label{sec:Derivations}
+In this report, we have considered an infinite, one dimensional lattice, occupied by two identical, \textit{spinless} fermions, separated by a distance $n$. In order to obey the Pauli exclusion principle, we must impose the condition that $ n \geq 1 $. Let $a$ denote the separation between two successive lattice points. A particle occupying a certain lattice point may only hop to either of its nearest neighbors. For now, we consider only nearest neighbor (NN) interaction. In second quantization notation, such a state can be described by the Hamiltonian
+\begin{equation}\label{eqn:Hamiltonian}
+\hat{\mathcal{H}} = -t \sum_{i}\left( c^{\dagger}_{i} c^{}_{i + 1} + c^{\dagger}_{i + 1} c^{}_{i} \right) + U \sum_{i} n_i n_{i + 1}
+\end{equation}
+where $c^{\dagger}_{i}$ is the creation operator which creates a fermion at the $i$-th site and $c_{i}$ is its corresponding destruction operator. $n_i = c^{\dagger}_{i} c_{i}$ is the number operator, that is, the number of fermions occupying the $i$th site. The first term in the Hamiltonian denotes the energy of the system due to hopping of the particles from one lattice point to the next. The second term is the energy contributed to the system due to the interaction between the two particles when they are in the NN sites.
+
+A two particle state is denoted in real-space as $\ket{i, j}$, where the fermions are placed in the $i$-th and $j$-th positions on the lattice, with respect to an arbitrarily selected origin. However, it is to be noted that the Hamiltonian has complete translational invariance, and as a result, the total momentum of the system, $k$ is conserved. Thus, it is possible to express the two particle state in terms of $k$ and $n$ as $\ket{k, n}$, $n$ being the separation between the two fermions. This state can be obtained as a Fourier transform of the real-space state.
+
+Suppose the two particles are placed at the positions $i$ and $i + n$. The coordinate of the center of mass can be denoted as
+\begin{displaymath}
+R = \frac{1}{2} \left( i + i + n \right) = i + \frac{n}{2}
+\end{displaymath}
+
+Then,
+\begin{displaymath}
+\begin{split}
+\ket{k, n}  &= \frac{1}{\sqrt{N}} \sum_{i}\exp\left[ \I k R\right]  \ket{i, j}\\
+			&= \frac{1}{\sqrt{N}} \sum_{i}\exp\left[ \I k R\right]  c^{\dagger}_{i} c^{\dagger}_{i + n} \ket{0}\\
+\end{split}
+\end{displaymath}
+where $N$ is a constant.
+
+Since the origin is arbitrary, we can shift it so that $R \longrightarrow \left(R_i + \frac{n a}{2}\right)$. This gives us the final two particle state as
+\begin{equation}
+\ket{k,n} = \frac{1}{\sqrt{N}} \sum_{i}\exp\left[ \I k \left( R_i + \frac{n a}{2}\right) \right]  c^{\dagger}_{i} c^{\dagger}_{i + n} \ket{0}
+\end{equation}
+
+From this, we can calculate $\hat{\mathcal{H}} \ket{k, n}$. For this, we will use the following properties of the creation and annihilation operators:
+\begin{eqnarray}
+\acomm{c^{}_i}{c^{\dagger}_j} &= \delta_{i,j}\\
+\acomm{c^{\dagger}_i}{c^{\dagger}_j} &= 0\\
+\acomm{c^{}_i}{c^{}_j} &= 0\\
+c^{}_i\ket{0} &= 0
+\end{eqnarray}
+
+First, for the sake of simplicity, let us consider only the first term of the Hamiltonian.
+\begin{displaymath}
+\begin{split}
+&\hat{\mathcal{H}} \ket{k, n}\\ 
+=& -t \sum_{j}\left( c^{\dagger}_{j} c^{}_{j + 1} + c^{\dagger}_{j + 1} c^{}_{j} \right)  \frac{1}{\sqrt{N}} \sum_{i}\exp\left[ \I k \left( R_i + \frac{n a}{2}\right) \right]  c^{\dagger}_{i} c^{\dagger}_{i + n} \ket{0}\\
+=& -\frac{t}{\sqrt{N}} \left[ \sum_{i,j}\exp\left[\I k \left(R_i + \frac{na}{2}\right)\right]\left(c^{\dagger}_{j} c^{}_{j+1} c^{\dagger}_{i} c^{\dagger}_{i + n} \right) + \sum_{i,j}\exp\left[\I k \left(R_i + \frac{na}{2}\right)\right]\left(c^{\dagger}_{j + 1} c^{}_{j} c^{\dagger}_{i} c^{\dagger}_{i + n} \right) \right]\ket{0}
+\end{split}
+\end{displaymath}
+Now,
+\begin{displaymath}
+\begin{split}
+&\sum_{i,j}\exp\left[\I k \left(R_i + \frac{na}{2}\right)\right]\left(c^{\dagger}_{j} c^{}_{j+1} c^{\dagger}_{i} c^{\dagger}_{i + n} \right)\\
+=& \sum_{i,j}\exp\left[\I k \left(R_i + \frac{na}{2}\right)\right]\left[c^{\dagger}_{j} \left( \delta^{}_{j+1,i}-c^{\dagger}_{i}c^{}_{j+1}\right)   c^{\dagger}_{i + n} \right]\ket{0}\\
+=& \sum_{i,j}\exp\left[\I k \left(R_i + \frac{na}{2}\right)\right]c ^{\dagger}_{i}c^{\dagger}_{i+\left( n+1\right) }\ket{0} - \sum_{i,j}\exp\left[\I k \left(R_i + \frac{na}{2}\right)\right]c^{\dagger}_{j} c^{\dagger}_{i} c^{}_{j+1} c^{\dagger}_{i+n} \ket{0}\\
+=&\exp\left[-\I k \frac{a}{2}\right]\sum_{i,j}\exp\left[\I k \left(R_i + \frac{\left( n+1\right) a}{2}\right)\right]c ^{\dagger}_{i}c^{\dagger}_{i+\left( n+1\right) }\ket{0} - \sum_{i,j}\exp\left[\I k \left(R_i + \frac{na}{2}\right)\right]c^{\dagger}_{j} c^{\dagger}_{i} c^{}_{j+1} c^{\dagger}_{i+n} \ket{0}\\
+=& \exp\left[-\I k \frac{a}{2}\right] \ket{k, n + 1} - \sum_{i,j}\exp\left[\I k \left(R_i + \frac{na}{2}\right)\right]c^{\dagger}_{j} c^{\dagger}_{i} c^{}_{j+1} c^{\dagger}_{i+n} \ket{0}\\
+=& \exp\left[-\I k \frac{a}{2}\right] \ket{k, n + 1} - \sum_{i,j}\exp\left[\I k \left(R_i + \frac{na}{2}\right)\right]c^{\dagger}_{j}c^{\dagger}_{i} \left( \delta^{}_{j+1,i+n} - c^{\dagger}_{i+n}c^{}_{j+1}\right) \ket{0}\\
+=& \exp\left[-\I k \frac{a}{2}\right] \ket{k, n + 1} - \sum_{i,j}\exp\left[\I k \left(R_i + \frac{na}{2}\right)\right]c^{\dagger}_{i + \left( n - 1\right) }c^{\dagger}_{i}\ket{0} + \sum_{i,j}\exp\left[\I k \left(R_i + \frac{na}{2}\right)\right]c^{\dagger}_{j}c^{\dagger}_{i}c^{\dagger}_{i+n}c^{}_{j+1}\ket{0}\\
+=& \exp\left[-\I k \frac{a}{2}\right] \ket{k, n + 1} + \exp\left[\I k \frac{a}{2}\right] \sum_{i,j}\exp\left[\I k \left(R_i + \frac{\left( n-1\right) a}{2}\right)\right]c^{\dagger}_{i}c^{\dagger}_{i + \left( n - 1\right) }\ket{0}\\
+=& \exp\left[-\I k \frac{a}{2}\right] \ket{k, n + 1} + \exp\left[\I k \frac{a}{2}\right] \ket{k, n - 1}
+\end{split}
+\end{displaymath}
+
+Similarly,
+\begin{displaymath}
+\sum_{i,j}\exp\left[\I k \left(R_i + \frac{na}{2}\right)\right]\left(c^{\dagger}_{j+1} c^{}_{j} c^{\dagger}_{i} c^{\dagger}_{i + n} \right) = \exp\left[-\I k \frac{a}{2}\right] \ket{k, n + 1} + \exp\left[\I k \frac{a}{2}\right] \ket{k, n - 1}
+\end{displaymath}
+
+Adding the previous two results, we get the first term as
+\begin{displaymath}
+\hat{\mathcal{H}}\ket{k,n} = -2 t \cos(k \frac{a}{2})\left[ \ket{k, n - 1} + \ket{k, n + 1} \right]
+\end{displaymath}
+
+The second term of the Hamiltonian is $U \sum_{i} n^{}_{i} n^{}_{i + 1}$. Now, each term of this sum is non-zero if and only if two NN sites are occupied, or, in other words, if $n=1$. Thus, for the second term, we get
+\begin{displaymath}
+\hat{\mathcal{H}}\ket{k,n} = U \delta^{}_{n,1}\ket{k,n}
+\end{displaymath}
+
+Combining the three terms, we get
+\begin{equation}
+\hat{\mathcal{H}} \ket{k,n} = \left( U\, \delta^{}_{1,n} \right) \ket{k, n} - 2 t \cos(k \frac{a}{2})\left[ \ket{k, n - 1} + \ket{k, n + 1} \right]
+\end{equation}
+Taking the symbols
+\begin{displaymath}
+\begin{split}
+U\left(n\right) &= U\, \delta^{}_{1,n}\\
+f\left(k\right) &= 2 t \cos(k \frac{a}{2})
+\end{split}
+\end{displaymath}
+we get the final equation as
+\begin{equation}\label{eqn:H_kn}
+\hat{\mathcal{H}} \ket{k,n} = U\left(n\right) \ket{k, n} - f\left(k\right)\left[ \ket{k, n - 1} + \ket{k, n + 1} \right]
+\end{equation}
+The Green's function in frequency space is defined as
+\begin{equation}\label{eqn:GreenFunc}
+\hat{G}\left(\omega\right) = \left[ \omega + \I \epsilon - \hat{\mathcal{H}} \right]^{-1}
+\end{equation}
+where $\epsilon \longrightarrow 0^{+}$ is called the regulator, used to prevent the Green's function from blowing up at the poles, and we have set $\hbar = 1$.
+
+We also define the matrix elements of the Green's function as
+\begin{equation}\label{eqn:GF_mel}
+G\left(m, n; k, \omega \right) = \mel{k, m}{\hat{G}\left(\omega\right)}{k, n}
+\end{equation}
+
+A plot of the two particle spectral weight function,
+\begin{equation}\label{eqn:SpectralWeight}
+A_2 \left( k, \omega \right) = - \frac{1}{\pi} \Im{G\left(1, 1; k, \omega \right)}
+\end{equation}
+will give us the two particle spectrum.
+
+In order to calculate \eqref{eqn:SpectralWeight}, from \eqref{eqn:GreenFunc}, we can write the identity
+\begin{displaymath}
+\hat{G}\left(\omega\right)\left[ z - \hat{\mathcal{H}} \right] = 1
+\end{displaymath}
+where $z = \omega + \I \epsilon$. Now, $\braket{k, m}{k, n} = \delta^{}_{m,n}$. Also,
+\begin{displaymath}
+\begin{split}
+&\mel{k,m}{\hat{G}\left(\omega\right)\left[ z - \hat{\mathcal{H}} \right]}{k,n}\\
+&= z  \mel{k, m}{\hat{G}\left(\omega\right)}{k, n} -  \mel{k, m}{\hat{G}\hat{\mathcal{H}}\left(\omega\right)}{k, n}\\
+&= z G\left(m, n; k, \omega \right) - U \left( n\right)  G\left(m, n; k, \omega \right) + f\left( k\right) \left[ G\left(m, n + 1; k, \omega \right) + G\left(m, n - 1; k, \omega \right) \right]
+\end{split}
+\end{displaymath}
+This gives us the relation
+\begin{equation}
+\left[  z - U \left( n\right) \right]   G\left(m, n; k, \omega \right) + f\left( k\right) \left[ G\left(m, n - 1; k, \omega \right)\right]  + f \left[ G\left(m, n + 1; k, \omega \right) \right] = \delta^{}_{m, n}
+\end{equation}
+By virtue of the exclusion principle, we can say that $G\left(m, n; k, \omega\right) = 0$ when $m = 0$ or $n = 0$. Also, as we are only interested in calculating $G\left(1, 1; k, \omega\right)0$, we can fix $m = 1$. We assign the symbol $G\left(1, n; k, \omega \right) = G^{}_n$. This modifies our previous equation and gives us
+\begin{equation}
+\left[ z - U \right]   G^{}_{n} + f G^{}_{n - 1}  + f G^{}_{n + 1} = \delta^{}_{1, n}
+\end{equation}
+This is a recursion relation that connects any particular $G^{}_{n}$ with the one before and after it. This theoretically allows us to calculate the expression given in \eqref{eqn:SpectralWeight}.
+
+We have already established that $G^{}_{0} = 0$. In order to do a calculation, we need to set a cut-off point for the infinite recursion relation. Suppose, $G^{}_{n} = 0$ for some $n > n_c$. This will give us the set of equations:
+\begin{eqnarray}
+&&G^{}_{1} = \left[ z - U \right] ^{-1} \left[ 1 - f G^{}_{2} \right] \\
+&&G^{}_{n} = \left[ z - U \right] ^{-1} \left[ - f G^{}_{n - 1}   - f G^{}_{n + 1}\right] \qq{[where\,$n \in \left( 1, n_c \right)$]}\\
+&&G^{}_{n_c} = \left[ z - U \right] ^{-1} \left[ - f G^{}_{n_c-1} \right]
+\end{eqnarray}
+There are $n - 2$ equations where\,$n \in \left( 1, n_c \right)$. This gives us a system of $n$ equations with $n$ unknowns that can be solved to obtain $G^{}_1$ directly. However, we would now like to exploit the pattern of the equations, and rewrite the equations in a manner such that every $G^{}_n$ is related, via a scalar operator, to only $G^{}_{n - 1}$. This will allow us to write $G^{}_n$ in the form of a continued fraction.
+
+We have shown that at the cutoff point,
+\begin{displaymath}
+G^{}_n = -\left[z - U\right]^{-1} f G^{}n_1
+\end{displaymath}
+Also,
+\begin{displaymath}
+\left[z - U\right] G^{}_{n-1} = - f G^{}_{n-2} - \left[z - U\right]^{-1} f^2 G^{}_{n}
+\end{displaymath}
+Combining the two results, we get that
+\begin{displaymath}
+\begin{split}
+&\left[z - U\right] G^{}_{n-1} = - f G^{}_{n-2} - f G^{}_{n}\\
+\Rightarrow\,&G^{}_{n-1} = -f\left[ \left[ z - U \right] - \left[ z - U \right]^{-1}f^2 \right] G^{}_{n-2}
+\end{split}
+\end{displaymath}
+We define the symbol $V^{}_{n-1} = -f\left[ \left[ z - U \right] - \left[ z - U \right]^{-1}f^2 \right]$. Then,
+\begin{displaymath}
+G^{}_{n-1} = V^{}_{n-1} G^{}_{n-2}
+\end{displaymath}
+The terms above this hold the relation
+\begin{displaymath}
+\begin{split}
+&\left[z - U\right] G^{}_{n-2} = - f G^{}_{n-3} - f G^{}_{n-1}\\
+\Rightarrow\, & \left[z - U\right] G^{}_{n-2} = - f G^{}_{n-3} - f V^{}_{n-1} G^{}_{n-2}\\
+\Rightarrow\, & G^{}_{n-2} = -f \left[ \left[ z - U \right] + f V^{}_{n-1} \right]^{-1} G^{}_{n-2}
+\end{split}
+\end{displaymath}
+This relation generalizes between any two successive $G^{}_{m}$ and gives us a way to relate them via a single operator, which is written in terms of $V^{}_{m}$. Thus, by knowing the appropriate $V^{}_{m}$, we can find any $G^{}_{m}$. Our objective is now to express this $V^{}_{m}$ in terms of a continued fraction. Now, as shown before,
+\begin{displaymath}
+G^{}_{n-2} = V^{}_{n-2} G^{}_{n-3}
+\end{displaymath}
+Comparing this with the previous result, we get
+\begin{displaymath}
+V^{}_{n-2} = -f \left[ \left[ z - U \right] + f V^{}_{n-1} \right]^{-1}
+\end{displaymath}
+As the indices are arbitrary, we can relabel them and get
+\begin{equation}\label{eqn:V_relation}
+V^{}_{n} = -f \left[ \left[ z - U \right] + f V^{}_{n+1} \right]^{-1}
+\end{equation}
+At the cutoff point,
+\begin{displaymath}
+V^{}_{n_c} = -f \left[ z - U \right]^{-1} 
+\end{displaymath}
+Now,
+\begin{displaymath}
+\begin{split}
+&\left[ z - U \right]G^{}_1 + f G^{}_{2} = 1  \\
+\Rightarrow\, & \left[ z - U \right]G^{}_1 + f V^{}_{2} G^{}_{1} = 1  \qq{$ \left[ \because G^{}_{n} = V^{}_{n} G^{}_{n-1} \right]  $} \\
+\Rightarrow\, & G^{}_1 = \left[ z - U + f V^{}_{2} \right] ^{-1}
+\end{split}
+\end{displaymath}
+Thus, the final expression is
+\begin{equation}
+A^{}_{2} \left( k, \omega \right) = -\frac{1}{\pi} \Im{\omega + \I \epsilon - U\left(n\right) + f\left(k\right) V^{}_{2} \left(k, \omega\right)}
+\end{equation}
+where $V^{}_{2}$ can be found using \eqref{eqn:V_relation} and the value of $V^{}_{n_c}$.
+
+\section{Results}\label{ssec:Results}
+The spectral weight function can be plotted against $\omega$ to obtain the spectrum of the two particle states of various kind of finite-range interactions.
+
+\subsection{Non-interacting particles}
+Using the theory explained in the previous chapter, we wrote a \texttt{python} program, which allows us to calculate and plot the spectral weight function for the nearest neighbor interaction case, given a value for $U$ and other parameters. In the next section, we have reproduced some of the prominent results from \cite{bib:mb_paper}.
+
+First, we consider the case of free particles. We set $U = 0$. Also, we take $t=1$, $\epsilon = 0.1$. The plot is made of 20 values of $k$ in the range $k \in \left[0,\pi\right]$, as shown in figure \ref{fig:u10u20}.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\linewidth]{NNN_Interaction/Basic_Plots/U1_0_U2_0}
+\caption{Spectrum of a free two-particle state for different values of $k$. Legends: {\color{blue} $k = 0$}, {\color{red} $k = \pi$}.}
+\label{fig:u10u20}
+\end{figure}
+
+We notice that the states form a continuum between the range $\left[-4t, 4t\right]$, that is, the bandwidth is $8t$, as is expected for a two-particle state.
+
+\subsection{Nearest neighbor interaction}
+Now, we turn on the NN interaction, to a value of $U = 1.5$. We must note that both $U$ and $t$ being positive, both the energy change due to hopping and NN interaction are positive. As a result, the peak in $A^{}_{2}\left(\omega\right)$ refers to a two particle anti-binding state, that is, the amount of energy required to form a two-particle bounded state where $n=1$. If the peak falls within the $8t$ continuum, no anti-binding state exists, while, the peak falling outside the continuum implies that extra energy must be expended to form the bound state. We illustrate the above state in the plot in figure \ref{fig:u11500u20}. It is to be noted that in this case, none of the peaks for any momentum state lie outside the continuum.
+
+\begin{figure}[h!]
+\centering
+\begin{subfigure}{0.45\linewidth}
+	\includegraphics[width=\textwidth]{NNN_Interaction/Basic_Plots/U1_1500_U2_0}
+	\caption{$U = 1.5$}
+	\label{fig:u11500u20}
+\end{subfigure}
+\begin{subfigure}{0.45\linewidth}
+\includegraphics[width=\textwidth]{NNN_Interaction/Basic_Plots/U1_5000_U2_0}
+\caption{$U = 5.0$}
+\label{fig:u15000u20}
+\end{subfigure}
+\caption{Spectrum of the two-particle state with $U = 1.5$ and $U = 5.0$, respectively, for different values of $k$. Legends: {\color{blue} $k = 0$}, {\color{red} $k = \pi$}.}
+\end{figure}
+
+If we turn up the interaction to $U = 5.0$, we are creating a stronger repulsive force. This is reflected in the fact that the peak shifts further to the right, meaning more energy is needed to bring the particle closer and closer. This has been demonstrated in figure \ref{fig:u15000u20}. Here, we see that \textit{all} peaks have moved outside the continuum.
+
+Thus, when the NN interaction is turned on, for small values of $k$, the spectrum is distorted. Then, beyond a certain value of $U$, the peaks separates from the continuum. The large momentum peak still lies between within the $8t$ range. Later, we will investigate the value of $U$ for which the entire set of peaks dissociates.
+
+\subsection{Interplay between broadening and cutoff}
+We can also investigate the effect of the values taken from the regulator, as well as the number of terms used before the cutoff.
+
+Let us consider the free particle spectrum for only $k=0$.
+
+First, we set $\epsilon = 0.1$. By changing $n^{}_{c}$ from $100$ to $500$, we can see that the spectrum becomes much smoother. This happens because the plot now has a larger number of peaks, but due to the small value of the regulator, they are unresolved and have merged. 
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\linewidth]{NNN_Interaction/Regulator_effects/U1_0_U2_0_100_500}
+\caption{Effect of changing the cutoff term, keeping the regulator constant.\,Legends:\,{\color{red}$n^{}_{c} = 100$}, {\color{blue}$n^{}_{c} = 500$}.}
+\label{fig:u10u20100500}
+\end{figure}
+
+Now, we observe the effect of a lower value of the regulator. At $\epsilon = 0.02$, the spectrum corresponding to 100 terms has larger and sharper, that is, more resolved, peaks. However, we see that when we increase the cutoff to 500, as the number of peaks increases, the regulator is not small enough to resolve them. We see that the peaks have become smaller and have merged.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\linewidth]{NNN_Interaction/Regulator_effects/U1_0_U2_0_epsilon_effect}
+\caption{Effect of changing the cutoff term, at a smaller value of  the regulator.\,Legends:\,{\color{red}$n^{}_{c} = 100$}, {\color{blue}$n^{}_{c} = 500$}.}
+\label{fig:u10u20epsiloneffect}
+\end{figure}
+
+Thus, we can conclude that there a strong interplay between the values of $\epsilon$ and $n^{}_{c}$, and we must choose them appropriately in order the obtain the desired result.
+
+
+\pagebreak
+\newpage
+\chapter{Few fermions with long range interactions}\label{sec:LongRange}\label{chap:few_fermion}
+\section{Introduction}
+The approach mentioned in the previous chapter is applicable to interactions that are long range, as well. In this chapter, we shall use the technique to investigate the spectrum of such long range forces as Coulomb potential and Rydberg atom potential. We shall study both attractive $(t=-1)$ and repulsive $(t=1)$ cases, that allows us to determine the critical value of $U$ for the formation of binding and anti-binding states. A binding state is defined as one where the inter-particle separation is fixed at one lattice spacing ($a$), the two-particle center of mass momentum is $k$, and the energy gained having the two particles next to each other is $-U$. An anti-binding state has the same definition, but here, putting two particles next to each other requires an energy cost of $U$.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.5\linewidth]{Long_Coulomb_Interaction/Bound_State_Duo/alpha_0_beta_1000}
+\caption{Formation of a {\color{red}binding $(t=-1)$} and an {\color{blue}anti-binding $(t=1)$} state for $k=0$.}
+\label{fig:alpha0beta1000duo}
+\end{figure}
+
+
+\section{The model}
+The interaction term has been taken as
+\begin{equation}\label{eqn:Long_interaction}
+U \left( n \right)  = U \frac{\exp(- \alpha n ^ 2)}{n ^ \beta}
+\end{equation}
+where $n$ is the separation between the two particles, and $\alpha$ and $\beta$ are two parameters. By tuning the two parameters, we shall obtain potentials of various widths, and by tuning $U$, we get the value where a bound state just appears, that is, the global maximum of the spectral weight function lies just outside the $8t$ continuum. Here, we shall investigate the two cases of $\beta = 1$ (Coulomb potential) and $\beta = 6$ (Rydberg atom potential).
+
+\section{Two particle density of states}
+The spectral weight function is calculated for a single value of $k$. When integrated over all values of $k$ within the irreducible Brillouin zone, we obtain the corresponding density of states (DOS) for the given form of the interaction. In case of discrete values of $k$, we can simply sum over the spectral weight function.
+\begin{equation}\label{eqn:DOS}
+\rho \left( \omega \right) = \frac{1}{\mathcal{N}}\sum_{k = 0}^{\pi} A^{}_{2} \left(k, \omega \right)
+\end{equation}
+where $\mathcal{N}$ is a normalization constant.
+
+Plotting the DOS will give us complete information about the formation of binding and anti-binding states for a given interaction.
+
+We will now investigate the evolution of the DOS with increasing strength of the interaction, in Coulomb and Rydberg potentials.
+
+\begin{figure}[p!]
+\centering
+\begin{subfigure}{0.3\linewidth}
+\includegraphics[width=\textwidth]{Long_Coulomb_Interaction/Evolution/alpha_0_beta_1000_U_0}
+\caption{$U = 0.0$}
+\end{subfigure}
+\begin{subfigure}{0.3\linewidth}
+	\includegraphics[width=\textwidth]{Long_Coulomb_Interaction/Evolution/alpha_0_beta_1000_U_2000}
+	\caption{$U = 2.0$}
+\end{subfigure}
+\begin{subfigure}{0.3\linewidth}
+	\includegraphics[width=\textwidth]{Long_Coulomb_Interaction/Evolution/alpha_0_beta_1000_U_4000}
+	\caption{$U = 4.0$}
+\end{subfigure}
+\begin{subfigure}{0.3\linewidth}
+	\includegraphics[width=\textwidth]{Long_Coulomb_Interaction/Evolution/alpha_0_beta_1000_U_6000}
+	\caption{$U = 6.0$}
+\end{subfigure}
+\begin{subfigure}{0.3\linewidth}
+	\includegraphics[width=\textwidth]{Long_Coulomb_Interaction/Evolution/alpha_0_beta_1000_U_8000}
+	\caption{$U = 8.0$}
+\end{subfigure}
+\begin{subfigure}{0.3\linewidth}
+	\includegraphics[width=\textwidth]{Long_Coulomb_Interaction/Evolution/alpha_0_beta_1000_U_10000}
+	\caption{$U = 10.0$}
+\end{subfigure}
+\caption{Evolution of the DOS with increasing value of $U$ for the $\alpha = 0$, $\beta = 1$ case.}
+\end{figure}
+\begin{figure}[p!]
+	\centering
+	\begin{subfigure}{0.3\linewidth}
+		\includegraphics[width=\textwidth]{Long_Coulomb_Interaction/Evolution/alpha_0_beta_6000_U_0}
+		\caption{$U = 0.0$}
+	\end{subfigure}
+	\begin{subfigure}{0.3\linewidth}
+		\includegraphics[width=\textwidth]{Long_Coulomb_Interaction/Evolution/alpha_0_beta_6000_U_2000}
+		\caption{$U = 2.0$}
+	\end{subfigure}
+	\begin{subfigure}{0.3\linewidth}
+		\includegraphics[width=\textwidth]{Long_Coulomb_Interaction/Evolution/alpha_0_beta_6000_U_4000}
+		\caption{$U = 4.0$}
+	\end{subfigure}
+	\begin{subfigure}{0.3\linewidth}
+		\includegraphics[width=\textwidth]{Long_Coulomb_Interaction/Evolution/alpha_0_beta_6000_U_6000}
+		\caption{$U = 6.0$}
+	\end{subfigure}
+	\begin{subfigure}{0.3\linewidth}
+		\includegraphics[width=\textwidth]{Long_Coulomb_Interaction/Evolution/alpha_0_beta_6000_U_8000}
+		\caption{$U = 8.0$}
+	\end{subfigure}
+	\begin{subfigure}{0.3\linewidth}
+		\includegraphics[width=\textwidth]{Long_Coulomb_Interaction/Evolution/alpha_0_beta_6000_U_10000}
+		\caption{$U = 10.0$}
+	\end{subfigure}
+	\caption{Evolution of the DOS with increasing value of $U$ for the $\alpha = 0$, $\beta = 6$ case.}
+\end{figure}
+
+We notice the following salient features in both sets plots:
+\begin{enumerate}
+\item The free particle DOS resembles that of a one-particle state on a 2D lattice. This is noteworthy, as it shows that two one-dimensional particles behave similar to a single particle in two dimensions.
+
+\item As $U$ increases, we see the anti-binding state gradually dissociate from the continuum. However, here, the instead of a single peak denoting the anti-binding state, we get a \textit{distribution of peaks} which resembles the DOS of \textit{one particle in 1D}. The width of the distribution is also dependent on $U$, and decreases with increasing $U$.
+\end{enumerate}
+
+\section{Critical potential for formation of anti-binding states}
+In this section, we will briefly discuss the value of the potential for which an anti-binding state is just formed.
+
+We will only consider the two cases of Coulomb $\left(\alpha = 0, \beta = 1\right)$ and the Rydberg $\left(\alpha = 0, \beta = 6\right)$ potential.
+
+\begin{figure}[h!]
+\centering
+\begin{subfigure}{0.4\linewidth}
+\includegraphics[width=\textwidth]{Long_Coulomb_Interaction/Crit_final/Crit_1/alpha_0_beta_1000_U_7800}
+\caption{Coulomb potential.}
+\label{fig:alpha0beta1000u7800}
+\end{subfigure}
+\begin{subfigure}{0.4\linewidth}
+\includegraphics[width=\textwidth]{Long_Coulomb_Interaction/Crit_final/Crit_6/alpha_0_beta_6000_U_6700}
+\caption{Rydberg potential.}
+\label{fig:alpha0beta6000u6700}
+\end{subfigure}
+\caption{Critical value of the potential at which an anti-binding state is just formed.}
+\end{figure}
+
+The anti-binding state for the Coulomb potential forms at about $U = 7.8$, while for the Rydberg atom potential, it is $U = 6.7$.
+
+We note here that the energy required to form an anti-binding state for the Coulomb potential is higher than that required for the Rydberg potential. This is expected, as the repulsive force due to the Coulomb potential, which varies as the second power of $r$, is higher than the Rydberg atom potential, which varies as the sixth power of $r$.
+
+\section{Future prospects of work}
+The Green's function technique is a very generalized method, and produces very accurate results when compared to experimental data. Hence, it can be applied to a variety of problems, apart from the ones mentioned in this report.
+
+Building on the framework presented here, one may extend this model to calculate the spectrum for few-body systems with more than two fermions. We may also easily incorporate spin into this problem, as well as extend it for higher dimensions.
+
+We are particularly interested in studying the behavior of the spectrum by tuning the range of the interaction. By tuning the value of $\alpha$ in equation \ref{eqn:Long_interaction}, we can make the potential decay at any rate we want. The potential we will then obtain will behave as a Coulomb (or Rydberg) potential within the full width at half maxima, beyond which, it will decay very rapidly. This gives us an approximate model of a limited range interaction. Under such an interaction, we would like to study how the critical potential for anti-binding state formation varies.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%========================Bibliography====================================================
+\begin{thebibliography}{99}
+\bibitem{bib:mb_paper}
+Mona Berciu, \textit{Few-particle Green's functions for strongly correlated systems on infinite lattices},  Phys. Rev. Lett. \textbf{107}, 246403 (2011).
+
+\bibitem{bib:mattuck}
+Richard D. Mattuck, \textit{A Guide to Feynman Diagrams in the Many-Body Problem, 2nd Edition} (McGraw-Hill, New York, 1967).
+\end{thebibliography}
+\end{document}
