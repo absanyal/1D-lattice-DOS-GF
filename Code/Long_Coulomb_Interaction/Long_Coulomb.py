@@ -5,6 +5,8 @@ Created on Wed Mar 22 17:28:36 2017
 @author: AB Sanyal
 """
 
+#JUST CHECKING
+
 #imports
 import numpy as np
 import matplotlib.pyplot as plt
